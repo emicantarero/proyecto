@@ -8,15 +8,15 @@
 #include "Alumno.h"
 #include <fstream>
 #include <string>
-
 using namespace std;
 using std::filesystem::recursive_directory_iterator;
 
 vector<Alumno> alumnos;
 void mostrarRutas(vector<string> rutas) {
 	for (string s : rutas) {
-		cout << "---Mostrando archivo---" << endl;
+		cout << "Revisando el archivo: " << endl;
 		cout << s << endl;
+		cout << endl;
 	}
 }
 
@@ -98,12 +98,24 @@ void listarAlumnos(string texto) {
 	}
 }
 
-void mostrarAlumnos(vector<Alumno> a) {
-	for (Alumno e : a)
-	{
-		cout << e << endl;
+void ordenar(vector<Alumno> alumnos1) {
+	Alumno aux;
+	for (int i = 0; i < 5; i++) {
+		for (int x = 0; x < 5; x++) {
+			if (alumnos1[i].audio > alumnos1[x].audio) {
+				aux = alumnos1[i];
+				alumnos1[i] = alumnos1[x];
+				alumnos1[x] = aux;
+			}
+		}
 	}
+	for (Alumno e : alumnos1)
+	{
+		cout << e;
+	}
+
 }
+
 
 void revisarArchivos(vector<string> rutas) {
 	string texto;
@@ -118,7 +130,7 @@ void revisarArchivos(vector<string> rutas) {
 		else {
 			while (!archivo.eof()) {
 				getline(archivo, texto);
-				cout << texto << endl;
+				//cout << texto << endl;
 				listarAlumnos(texto);
 			}
 		}
@@ -130,9 +142,17 @@ void revisarArchivos(vector<string> rutas) {
 int main() {
 	vector <string> rutas = separarArchivos();
 	mostrarRutas(rutas);
+	cout << endl;
 	revisarArchivos(rutas);
-	mostrarAlumnos(alumnos);
-	cout << alumnos.size();
+	cout << "*LISTADO:" << endl;
+	cout.fill('=');
+	cout << "" << setw(9) << "" << endl << endl;
+	cout.fill(' ');
+	cout.width(16); cout << "ALUMNO" << setw(8) << "AUDIO" << setw(9) << "NO-AUDIO" << setw(11) << "ASISTENCIA" << setw(11) << "PORCENTAJE" << endl;
+	cout.fill('-');
+	cout << "          " << setw(6) << "" << "   " << setw(5) << "" << " " << setw(8) << "" << " " << setw(10) << ""<< " " << setw(10) << "" << " " << endl;
+	cout.fill(' ');
+	ordenar(alumnos);
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
